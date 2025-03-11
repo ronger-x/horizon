@@ -1,0 +1,95 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: ENC(8kZ8YYjALJ8QVOoArjU7xf4Jlltc2/Kcv100KUr9EQk=)
+      database: 1
+      timeout: 3000
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: 1
+          max-idle: 500
+          min-idle: 0
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: mortise
+    password: ENC(gqCvS0P65Xk4zQ0yxo8ycVaEctJO3CZlfl1asvo5kO/5JilBsYFyvxxSxJTMHV8D1P6hApJ28J4=)
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: mortisePool
+      connection-test-query: SELECT 1
+      schema: mortise
+  mail:
+    host: smtp.ym.163.com
+    port: 465
+    username: service@rymcu.com
+    password: ENC(wYjMDevKQeoMzDmkks4Spe4tvNB1f5iSv6qEaA6VFys=)
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  security:
+    oauth2:
+      client:
+        registration:
+          logto:
+            client-name: ATDAK
+            client-id: ${LOGTO_CLIENT_ID}
+            client-secret: ${LOGTO_CLIENT_SECRET}
+            redirect-uri: ${baseUrl}/api/oauth2/code/logto
+            authorization-grant-type: authorization_code
+            scope: openid,profile,offline_access,email
+            provider: logto
+        provider:
+          logto:
+            issuer-uri: https://auth.rymcu.local/oidc
+            authorization-uri: https://auth.rymcu.local/oidc/auth
+            jwk-set-uri: https://auth.rymcu.local/oidc/jwks
+            user-info-uri: https://auth.rymcu.local/oidc/me
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.yaml
+    default-schema: mortise
+    liquibase-schema: public
+logging:
+  file:
+    path: /logs/mortise
+  level:
+    com:
+      rymcu: info
+server:
+  port: 8080
+  servlet:
+    context-path: /mortise
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 10240
+  max-http-request-header-size: 10240
+baseUrl: https://rymcu.local
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: local-plus #默认存储平台
+    local-plus:
+      - platform: local-plus-1 # 存储平台标识
+        enable-storage: true  #启用存储
+        enable-access: true #启用访问（线上请使用 Nginx 配置，效率更高）
+        domain: /mortise/file/ # 访问域名，例如：“http://127.0.0.1:8030/file/”，注意后面要和 path-patterns 保持一致，“/”结尾，本地存储建议使用相对路径，方便后期更换域名
+        base-path: local-plus/ # 基础路径
+        path-patterns: /file/** # 访问路径
+        storage-path: /opt/mortise/storage/ # 存储路径

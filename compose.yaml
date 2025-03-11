@@ -1,0 +1,83 @@
+services:
+  postgresql:
+    image: postgres:17-alpine
+    container_name: mortise-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mortise
+      POSTGRES_PASSWORD: XzHvhX4CDaN696oQAXdmlcsrqgWbkxRl
+      POSTGRES_DB: postgres
+      TZ: Asia/Shanghai
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -U postgres' ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./app/postgresql/data:/var/lib/postgresql/data
+      - ./app/postgresql/logs:/var/log/postgresql
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+  redis:
+    image: 'redis:7.0.8'
+    container_name: mortise-redis
+    restart: unless-stopped
+    sysctls:
+      - net.core.somaxconn=1024
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./app/redis:/data
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass d9d2j9w2 --appendonly yes
+    environment:
+      TZ: Asia/Shanghai
+  logto:
+    image: svhd/logto
+    container_name: mortise-logto
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      INTEGRATION_TEST: true
+      TRUST_PROXY_HEADER: true
+      DB_URL: postgresql://mortise:XzHvhX4CDaN696oQAXdmlcsrqgWbkxRl@postgresql:5432/logto
+      ENDPOINT: https://auth.rymcu.local
+      ADMIN_ENDPOINT: https://logto.rymcu.local
+      # Self-signed certificates require NODE_EXTRA_CA_CERTS to be configured
+      NODE_EXTRA_CA_CERTS: /usr/local/share/ca-certificates/logto-rootCA.crt
+    # Self-signed certificates need to be added to the container
+    volumes:
+      - ./config/rootCA.pem:/usr/local/share/ca-certificates/logto-rootCA.crt
+    extra_hosts:
+      # Map the hostnames to the IP addresses of the host machine
+      - "auth.rymcu.local:172.17.0.1"
+      - "logto.rymcu.local:172.17.0.1"
+    entrypoint: ['sh', '-c', 'npm run cli db seed -- --swe && npm start']
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./app/npm/data:/data
+      - ./app/npm/letsencrypt:/etc/letsencrypt
+    environment:
+      TZ: Asia/Shanghai
+    extra_hosts:
+      - "ip-ranges.amazonaws.com:172.67.156.236"
