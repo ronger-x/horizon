@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rymcu.mortise.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="com.rymcu.mortise.entity.Role">
+<mapper namespace="com.rymcu.horizon.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.rymcu.horizon.entity.Role">
         <id column="id" jdbcType="INTEGER" property="idRole"/>
         <result column="label" jdbcType="VARCHAR" property="label"/>
         <result column="permission" jdbcType="VARCHAR" property="permission"/>
@@ -10,25 +10,25 @@
         <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
     <insert id="insertRoleMenu">
-        insert into mortise_role_menu (id_mortise_role, id_mortise_menu) values (#{idRole}, #{idMenu})
+        insert into horizon_role_menu (id_horizon_role, id_horizon_menu) values (#{idRole}, #{idMenu})
     </insert>
     <update id="updateStatusByIdRole">
-        update mortise_role set status = #{status} where id = #{idRole}
+        update horizon_role set status = #{status} where id = #{idRole}
     </update>
     <update id="updateDelFlag">
-        update mortise_role set del_flag = #{delFlag} where id = #{idRole}
+        update horizon_role set del_flag = #{delFlag} where id = #{idRole}
     </update>
     <select id="selectRolesByIdUser" resultMap="BaseResultMap">
         select tr.id, tr.label, tr.permission
-        from mortise_user_role tur
-                 left join mortise_role tr on tur.id_mortise_role = tr.id
-        where tur.id_mortise_user = #{idUser}
+        from horizon_user_role tur
+                 left join horizon_role tr on tur.id_horizon_role = tr.id
+        where tur.id_horizon_user = #{idUser}
     </select>
     <select id="selectRoleByPermission" resultMap="BaseResultMap">
-        select id, label, permission from mortise_role where permission = #{permission}
+        select id, label, permission from horizon_role where permission = #{permission}
     </select>
     <select id="selectRoles" resultMap="BaseResultMap">
-        select id, label, permission, status from mortise_role
+        select id, label, permission, status from horizon_role
         <trim prefix="where" prefixOverrides="and">
             <if test="label != null and label != ''">
                 and label = #{label}
@@ -42,8 +42,8 @@
         </if>
     </select>
     <select id="selectRoleMenus" resultType="java.lang.Long">
-        select id_mortise_menu
-        from mortise_role_menu
-        where id_mortise_role = #{idRole}
+        select id_horizon_menu
+        from horizon_role_menu
+        where id_horizon_role = #{idRole}
     </select>
 </mapper>

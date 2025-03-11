@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-schema
+      author: ronger
+      context: horizon
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS horizon
+            endDelimiter: ;

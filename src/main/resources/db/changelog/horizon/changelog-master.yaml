@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - context: horizon
+  - include:
+      file: db/changelog/horizon/init/init-schema.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_user.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_role.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_user_role.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_menu.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_role_menu.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_dict_type.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_dict.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_operate_log.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_file_detail.yaml
+  - include:
+      file: db/changelog/horizon/tables/horizon_file_part_detail.yaml
+  - include:
+      file: db/changelog/horizon/data/horizon_role_data.yaml

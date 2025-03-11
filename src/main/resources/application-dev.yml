@@ -32,9 +32,9 @@ spring:
       max-lifetime: 1800000
       maximum-pool-size: 10
       minimum-idle: 5
-      pool-name: mortisePool
+      pool-name: horizonPool
       connection-test-query: SELECT 1
-      schema: mortise
+      schema: horizon
   mail:
     host: smtp.ym.163.com
     port: 465
@@ -63,19 +63,20 @@ spring:
             jwk-set-uri: https://auth.rymcu.local/oidc/jwks
             user-info-uri: https://auth.rymcu.local/oidc/me
   liquibase:
-    change-log: classpath:db/changelog/changelog-master.yaml
-    default-schema: mortise
+    change-log: classpath:db/changelog/horizon/changelog-master.yaml
+    default-schema: horizon
     liquibase-schema: public
+    contexts: horizon
 logging:
   file:
-    path: /logs/mortise
+    path: /logs/horizon
   level:
     com:
       rymcu: info
 server:
-  port: 8080
+  port: 9998
   servlet:
-    context-path: /mortise
+    context-path: /horizon
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
@@ -89,7 +90,7 @@ dromara:
       - platform: local-plus-1 # 存储平台标识
         enable-storage: true  #启用存储
         enable-access: true #启用访问（线上请使用 Nginx 配置，效率更高）
-        domain: /mortise/file/ # 访问域名，例如：“http://127.0.0.1:8030/file/”，注意后面要和 path-patterns 保持一致，“/”结尾，本地存储建议使用相对路径，方便后期更换域名
+        domain: /horizon/file/ # 访问域名，例如：“http://127.0.0.1:8030/file/”，注意后面要和 path-patterns 保持一致，“/”结尾，本地存储建议使用相对路径，方便后期更换域名
         base-path: local-plus/ # 基础路径
         path-patterns: /file/** # 访问路径
-        storage-path: /opt/mortise/storage/ # 存储路径
+        storage-path: /opt/horizon/storage/ # 存储路径

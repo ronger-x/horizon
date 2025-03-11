@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-horizon-user-role-table
+      author: ronger
+      context: horizon
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            tableExists:
+              tableName: horizon_user_role
+      changes:
+        - createTable:
+            tableName: horizon_user_role
+            columns:
+              - column:
+                  name: id_horizon_user
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_horizon_role
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - sql: COMMENT ON TABLE horizon_user_role IS '用户权限表'
+        - sql: COMMENT ON COLUMN horizon_user_role.id_horizon_user IS '用户表主键'
+        - sql: COMMENT ON COLUMN horizon_user_role.id_horizon_role IS '角色表主键'
+
+        - createIndex:
+            indexName: horizon_user_role_id_horizon_user_id_horizon_role_uindex
+            tableName: horizon_user_role
+            unique: true
+            columns:
+              - column:
+                  name: id_horizon_user
+              - column:
+                  name: id_horizon_role
+        - sql: COMMENT ON INDEX horizon_user_role_id_horizon_user_id_horizon_role_uindex IS '用户权限表主键索引'

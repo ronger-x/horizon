@@ -1,10 +1,10 @@
 services:
   postgresql:
     image: postgres:17-alpine
-    container_name: mortise-postgres
+    container_name: horizon-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: mortise
+      POSTGRES_USER: horizon
       POSTGRES_PASSWORD: XzHvhX4CDaN696oQAXdmlcsrqgWbkxRl
       POSTGRES_DB: postgres
       TZ: Asia/Shanghai
@@ -26,7 +26,7 @@ services:
       - "config_file=/etc/postgresql/postgresql.conf"
   redis:
     image: 'redis:7.0.8'
-    container_name: mortise-redis
+    container_name: horizon-redis
     restart: unless-stopped
     sysctls:
       - net.core.somaxconn=1024
@@ -42,7 +42,7 @@ services:
       TZ: Asia/Shanghai
   logto:
     image: svhd/logto
-    container_name: mortise-logto
+    container_name: horizon-logto
     restart: unless-stopped
     ports:
       - '3001:3001'
@@ -53,7 +53,7 @@ services:
     environment:
       INTEGRATION_TEST: true
       TRUST_PROXY_HEADER: true
-      DB_URL: postgresql://mortise:XzHvhX4CDaN696oQAXdmlcsrqgWbkxRl@postgresql:5432/logto
+      DB_URL: postgresql://horizon:XzHvhX4CDaN696oQAXdmlcsrqgWbkxRl@postgresql:5432/logto
       ENDPOINT: https://auth.rymcu.local
       ADMIN_ENDPOINT: https://logto.rymcu.local
       # Self-signed certificates require NODE_EXTRA_CA_CERTS to be configured

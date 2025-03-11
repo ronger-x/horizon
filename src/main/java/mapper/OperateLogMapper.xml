@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rymcu.mortise.mapper.OperateLogMapper">
-    <resultMap type="com.rymcu.mortise.entity.OperateLog" id="OperateLogMap">
+<mapper namespace="com.rymcu.horizon.mapper.OperateLogMapper">
+    <resultMap type="com.rymcu.horizon.entity.OperateLog" id="OperateLogMap">
         <result property="idOperateLog" column="ID" jdbcType="NUMERIC"/>
         <result property="traceId" column="TRACE_ID" jdbcType="VARCHAR"/>
         <result property="bizNo" column="BIZ_NO" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
     <select id="selectOperateLogs" resultMap="OperateLogMap">
-        SELECT * FROM mortise_OPERATE_LOG
+        SELECT * FROM horizon_OPERATE_LOG
         <where>
             <if test="bizNo != null and bizNo != ''">
                 AND BIZ_NO = #{bizNo}

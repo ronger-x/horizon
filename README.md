@@ -13,7 +13,7 @@ Built by RYMCU
 
 ## Introduction
 
-一款现代化的后台管理脚手架项目，使用 Spring Boot 3 + Spring Security + JWT + Mybatis Plus + Redis 实现
+一款现代化的知识社区后台项目，使用 Spring Boot 3 + Spring Security + JWT + Mybatis Plus + Redis 实现
 
 ## Features
 
@@ -55,4 +55,4 @@ More information about Nginx Proxy Manager can be found [here](https://nginxprox
 
 
 ## Contributors
-[![](https://contrib.rocks/image?repo=rymcu/mortise&max=1000)](https://github.com/rymcu/mortise/graphs/contributors)
+[![](https://contrib.rocks/image?repo=rymcu/horizon&max=1000)](https://github.com/rymcu/horizon/graphs/contributors)

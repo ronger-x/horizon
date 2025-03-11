@@ -1,0 +1,36 @@
+# db/changelog/data/horizon_role_data.yaml
+databaseChangeLog:
+  - changeSet:
+      id: init-roles
+      author: ronger
+      context: horizon
+      preConditions:
+        - onFail: MARK_RAN
+        - and:
+          - not:
+              sqlCheck:
+                expectedResult: 1
+                sql: "SELECT COUNT(*) FROM horizon_role WHERE permission = 'administrator'"
+          - not:
+              sqlCheck:
+                expectedResult: 1
+                sql: "SELECT COUNT(*) FROM horizon_role WHERE permission = 'user'"
+      changes:
+        - insert:
+            tableName: horizon_role
+            columns:
+              - column:
+                  name: label
+                  value: administrator
+              - column:
+                  name: permission
+                  value: administrator
+        - insert:
+            tableName: horizon_role
+            columns:
+              - column:
+                  name: label
+                  value: user
+              - column:
+                  name: permission
+                  value: user

@@ -68,7 +68,7 @@ jobs:
   steps:
   - !PullRepository
     name: Pull from GitHub
-    remoteUrl: https://github.com/rymcu/mortise
+    remoteUrl: https://github.com/rymcu/horizon
     passwordSecret: access_token
     refs: refs/heads/* refs/tags/*
     withLfs: false
@@ -86,7 +86,7 @@ jobs:
   steps:
   - !PushRepository
     name: Push to GitHub
-    remoteUrl: https://github.com/rymcu/mortise
+    remoteUrl: https://github.com/rymcu/horizon
     passwordSecret: access_token
     force: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL

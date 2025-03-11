@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rymcu.mortise.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.rymcu.mortise.entity.User">
+<mapper namespace="com.rymcu.horizon.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.rymcu.horizon.entity.User">
         <id column="id" property="idUser"/>
         <result column="account" property="account"/>
         <result column="password" property="password"/>
@@ -17,7 +17,7 @@
         <result column="provider" property="provider"/>
         <result column="open_id" property="openId"/>
     </resultMap>
-    <resultMap id="UserInfoMap" type="com.rymcu.mortise.model.UserInfo">
+    <resultMap id="UserInfoMap" type="com.rymcu.horizon.model.UserInfo">
         <id column="id" property="idUser"/>
         <result column="account" property="account"/>
         <result column="nickname" property="nickname"/>
@@ -31,28 +31,28 @@
         <result column="role_names" property="roleNames"/>
     </resultMap>
     <insert id="insertUserRole">
-        insert into mortise_user_role (id_mortise_user, id_mortise_role) VALUES (#{idUser}, #{idRole})
+        insert into horizon_user_role (id_horizon_user, id_horizon_role) VALUES (#{idUser}, #{idRole})
     </insert>
     <update id="updateLastOnlineTimeByAccount">
-        update mortise_user set last_online_time = now() where account = #{account}
+        update horizon_user set last_online_time = now() where account = #{account}
     </update>
     <update id="updateLastLoginTime">
-        update mortise_user set last_login_time = now() where account = #{account}
+        update horizon_user set last_login_time = now() where account = #{account}
     </update>
     <update id="updatePasswordByEmail">
-        update mortise_user set password = #{password} where email = #{email}
+        update horizon_user set password = #{password} where email = #{email}
     </update>
     <update id="updateStatus">
-        update mortise_user set status = #{status} where id = #{idUser}
+        update horizon_user set status = #{status} where id = #{idUser}
     </update>
     <update id="updateDelFlag">
-        update mortise_user set del_flag = #{delFlag} where id = #{idUser}
+        update horizon_user set del_flag = #{delFlag} where id = #{idUser}
     </update>
     <update id="updatePasswordById">
-        update mortise_user set password = #{password} where id = #{idUser}
+        update horizon_user set password = #{password} where id = #{idUser}
     </update>
     <delete id="deleteUserRole">
-        delete from mortise_user_role where id_mortise_user = #{idUser}
+        delete from horizon_user_role where id_horizon_user = #{idUser}
     </delete>
     <select id="selectByAccount" resultMap="BaseResultMap">
         select id,
@@ -63,15 +63,15 @@
                avatar,
                phone,
                email
-        from mortise_user
+        from horizon_user
         where (account = #{account} or email = #{account} or phone = #{account})
           and del_flag = 1
     </select>
     <select id="selectCountByNickname" resultType="java.lang.Integer">
-        select count(0) from mortise_user where nickname = #{nickname}
+        select count(0) from horizon_user where nickname = #{nickname}
     </select>
     <select id="selectMaxAccount" resultType="java.lang.String">
-        select max(account) from mortise_user
+        select max(account) from horizon_user
     </select>
     <select id="selectUsers" resultMap="UserInfoMap">
         select id,
@@ -84,10 +84,10 @@
         last_login_time,
         last_online_time,
         created_time,
-        (select GROUP_CONCAT(label SEPARATOR ',') from mortise_role tr where exists(select 1 from mortise_user_role tur
-        where tur.id_mortise_role = tr.id
-        and tur.id_mortise_user = tu.id)) as role_names
-        from mortise_user tu where tu.del_flag = 1
+        (select GROUP_CONCAT(label SEPARATOR ',') from horizon_role tr where exists(select 1 from horizon_user_role tur
+        where tur.id_horizon_role = tr.id
+        and tur.id_horizon_user = tu.id)) as role_names
+        from horizon_user tu where tu.del_flag = 1
         <if test="account != null and account != ''">
             and account = #{account}
         </if>
@@ -119,16 +119,16 @@
                last_login_time,
                last_online_time,
                created_time
-        from mortise_user
+        from horizon_user
         where id = #{idUser}
     </select>
     <select id="selectByOpenId" resultMap="BaseResultMap">
-        select * from mortise_user where provider = #{provider} and open_id = #{openId}
+        select * from horizon_user where provider = #{provider} and open_id = #{openId}
     </select>
     <select id="selectUserRolePermissionsByIdUser" resultType="java.lang.String">
         select distinct tr.permission
-        from mortise_user_role tur
-                 join mortise_role tr on tur.id_mortise_role = tr.id
-        where tur.id_mortise_user = #{idUser}
+        from horizon_user_role tur
+                 join horizon_role tr on tur.id_horizon_role = tr.id
+        where tur.id_horizon_user = #{idUser}
     </select>
 </mapper>

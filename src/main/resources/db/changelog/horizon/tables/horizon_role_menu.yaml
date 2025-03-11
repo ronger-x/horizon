@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-horizon-role-menu-table
+      author: ronger
+      context: horizon
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            tableExists:
+              tableName: horizon_role_menu
+      changes:
+        - createTable:
+            tableName: horizon_role_menu
+            columns:
+              - column:
+                  name: id_horizon_role
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_horizon_menu
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - sql: COMMENT ON TABLE horizon_role_menu IS '角色菜单表'
+        - sql: COMMENT ON COLUMN horizon_role_menu.id_horizon_role IS '角色表主键'
+        - sql: COMMENT ON COLUMN horizon_role_menu.id_horizon_menu IS '菜单表主键'
+
+        - createIndex:
+            indexName: horizon_role_menu_uindex
+            tableName: horizon_role_menu
+            unique: true
+            columns:
+              - column:
+                  name: id_horizon_role
+              - column:
+                  name: id_horizon_menu
+        - sql: COMMENT ON INDEX horizon_role_menu_uindex IS '角色菜单表主键'
