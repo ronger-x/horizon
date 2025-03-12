@@ -20,7 +20,6 @@ public class FileDetail {
 
 
     @TableId(value = "id")
-    @TableField(value = "id")
     private Long idFileDetail;
 
     private String url;

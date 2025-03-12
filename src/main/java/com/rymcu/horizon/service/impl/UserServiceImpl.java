@@ -39,7 +39,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -92,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     user.setAccount(nextAccount());
                     user.setEmail(email);
                     user.setPassword(passwordEncoder.encode(password));
-                    user.setAvatar(DEFAULT_AVATAR);
+                    user.setPicture(DEFAULT_AVATAR);
                     int result = baseMapper.insert(user);
                     if (result > 0) {
                         // 注册成功后执行相关初始化事件
@@ -224,7 +227,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         list.forEach(userInfo -> {
             Avatar avatar = new Avatar();
             avatar.setAlt(userInfo.getNickname());
-            avatar.setSrc(userInfo.getAvatarUrl());
+            avatar.setSrc(userInfo.getPicture());
             userInfo.setAvatar(avatar);
         });
         return list;
@@ -262,7 +265,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 user.setPhone(userInfo.getPhone());
                 user.setNickname(checkNickname(userInfo.getNickname()));
                 user.setStatus(userInfo.getStatus());
-                user.setAvatar(userInfo.getAvatar().getSrc());
+                user.setPicture(userInfo.getAvatar().getSrc());
                 return baseMapper.updateById(user) > 0;
             }
             throw new BusinessException("用户不存在");
@@ -276,7 +279,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 code = String.valueOf(Utils.genCode());
             }
             user.setPassword(passwordEncoder.encode(code));
-            user.setAvatar(Objects.isNull(userInfo.getAvatar()) ? DEFAULT_AVATAR : userInfo.getAvatar().getSrc());
+            user.setPicture(Objects.isNull(userInfo.getAvatar()) ? DEFAULT_AVATAR : userInfo.getAvatar().getSrc());
             user.setAccount(nextAccount());
             user.setCreatedTime(LocalDateTime.now());
             boolean result = baseMapper.insertOrUpdate(user);
@@ -292,7 +295,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Boolean updateUserInfo(UserInfo userInfo) {
         User user = baseMapper.selectById(userInfo.getIdUser());
         user.setNickname(checkNickname(userInfo.getNickname()));
-        user.setAvatar(userInfo.getAvatar().getSrc());
+        user.setPicture(userInfo.getAvatar().getSrc());
         user.setEmail(userInfo.getEmail());
         user.setPhone(userInfo.getPhone());
         return baseMapper.updateById(user) > 0;
@@ -348,7 +351,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user = new User();
             user.setNickname(checkNickname(nickname));
             user.setEmail(email);
-            user.setAvatar(StringUtils.isNotBlank(picture) ? picture : DEFAULT_AVATAR);
+            user.setPicture(StringUtils.isNotBlank(picture) ? picture : DEFAULT_AVATAR);
             user.setOpenId(openId);
             user.setProvider(registrationId);
             String code = UlidCreator.getUlid().toString();
@@ -363,7 +366,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             user.setNickname(checkNickname(nickname));
             user.setEmail(email);
-            user.setAvatar(StringUtils.isNotBlank(picture) ? picture : user.getAvatar());
+            user.setPicture(StringUtils.isNotBlank(picture) ? picture : user.getPicture());
             baseMapper.insertOrUpdate(user);
         }
         TokenUser tokenUser = new TokenUser();

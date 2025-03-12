@@ -1,6 +1,5 @@
 package com.rymcu.horizon.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
 
     @TableId(value = "id")
-    @TableField(value = "id")
     private Long idUser;
     /**
      * 登录账号
@@ -47,7 +45,7 @@ public class User implements Serializable {
     /**
      * 头像路径
      */
-    private String avatar;
+    private String picture;
 
     /**
      * 邮箱地址

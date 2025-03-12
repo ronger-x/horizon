@@ -30,7 +30,7 @@ databaseChangeLog:
                   name: nickname
                   type: VARCHAR(128)
               - column:
-                  name: avatar
+                  name: picture
                   type: VARCHAR(512)
               - column:
                   name: email
@@ -77,7 +77,7 @@ databaseChangeLog:
         - sql: COMMENT ON COLUMN horizon_user.account IS '账号'
         - sql: COMMENT ON COLUMN horizon_user.password IS '密码'
         - sql: COMMENT ON COLUMN horizon_user.nickname IS '昵称'
-        - sql: COMMENT ON COLUMN horizon_user.avatar IS '头像'
+        - sql: COMMENT ON COLUMN horizon_user.picture IS '头像'
         - sql: COMMENT ON COLUMN horizon_user.email IS '邮箱'
         - sql: COMMENT ON COLUMN horizon_user.provider IS '供应商'
         - sql: COMMENT ON COLUMN horizon_user.open_id IS 'OpenID'

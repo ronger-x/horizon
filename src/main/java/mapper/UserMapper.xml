@@ -7,7 +7,7 @@
         <result column="password" property="password"/>
         <result column="nickname" property="nickname"/>
         <result column="real_name" property="realName"/>
-        <result column="avatar" property="avatar"/>
+        <result column="picture" property="picture"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
         <result column="status" property="status"/>
@@ -21,7 +21,7 @@
         <id column="id" property="idUser"/>
         <result column="account" property="account"/>
         <result column="nickname" property="nickname"/>
-        <result column="avatar" property="avatarUrl"/>
+        <result column="picture" property="picture"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
         <result column="status" property="status"/>
@@ -60,7 +60,7 @@
                account,
                password,
                status,
-               avatar,
+               picture,
                phone,
                email
         from horizon_user
@@ -78,7 +78,7 @@
         nickname,
         account,
         status,
-        avatar,
+        picture,
         email,
         phone,
         last_login_time,
@@ -114,7 +114,7 @@
                account,
                phone,
                status,
-               avatar,
+               picture,
                email,
                last_login_time,
                last_online_time,

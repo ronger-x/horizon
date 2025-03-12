@@ -1,6 +1,5 @@
 package com.rymcu.horizon.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -22,7 +21,6 @@ public class OperateLog {
      * 日志主键
      */
     @TableId(value = "id")
-    @TableField(value = "id")
     private Long idOperateLog;
     /**
      * 链路追踪编号

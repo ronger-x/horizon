@@ -1,11 +1,12 @@
 <pre align="center">
 
-███╗   ███╗  ██████╗  ██████╗  ████████╗ ██╗ ███████╗ ███████╗
-████╗ ████║ ██╔═══██╗ ██╔══██╗ ╚══██╔══╝ ██║ ██╔════╝ ██╔════╝
-██╔████╔██║ ██║   ██║ ██████╔╝    ██║    ██║ ███████╗ █████╗  
-██║╚██╔╝██║ ██║   ██║ ██╔══██╗    ██║    ██║ ╚════██║ ██╔══╝  
-██║ ╚═╝ ██║ ╚██████╔╝ ██║  ██║    ██║    ██║ ███████║ ███████╗
-╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═╝    ╚═╝    ╚═╝ ╚══════╝ ╚══════╝
+██╗  ██╗  ██████╗  ██████╗  ██╗ ███████╗  ██████╗  ███╗   ██╗
+██║  ██║ ██╔═══██╗ ██╔══██╗ ██║ ╚══███╔╝ ██╔═══██╗ ████╗  ██║
+███████║ ██║   ██║ ██████╔╝ ██║   ███╔╝  ██║   ██║ ██╔██╗ ██║
+██╔══██║ ██║   ██║ ██╔══██╗ ██║  ███╔╝   ██║   ██║ ██║╚██╗██║
+██║  ██║ ╚██████╔╝ ██║  ██║ ██║ ███████╗ ╚██████╔╝ ██║ ╚████║
+╚═╝  ╚═╝  ╚═════╝  ╚═╝  ╚═╝ ╚═╝ ╚══════╝  ╚═════╝  ╚═╝  ╚═══╝
+                                                       
 
 
 Built by RYMCU
@@ -45,6 +46,10 @@ Built by RYMCU
 10. add `auth.rymcu.local`: `logto:3010`
 11. add `logto.rymcu.local`: `logto:3011`
 12. add `rymcu.local`: `app:80`
+
+> 如果你使用的是 IDEA 内置的 JDK， 请在 JVM Options 添加以下参数：
+> 假设你的 JDK 安装目录为 `C:\Users\ronger\.jdks\temurin-21.0.5`
+> `-Djavax.net.ssl.trustStore=C:\Users\ronger\.jdks\temurin-21.0.5\lib\security\cacerts -Djavax.net.ssl.trustStorePassword=changeit`
 
 More information about Nginx Proxy Manager can be found [here](https://nginxproxymanager.com/guide/)
 

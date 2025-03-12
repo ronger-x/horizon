@@ -1,6 +1,5 @@
 package com.rymcu.horizon.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 public class Menu {
 
     @TableId(value = "id")
-    @TableField(value = "id")
     private Long idMenu;
 
     /**
